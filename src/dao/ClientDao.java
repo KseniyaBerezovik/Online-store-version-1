@@ -1,8 +1,8 @@
 package dao;
 
 import entity.Client;
-import other.ConnectionManager;
-import other.Role;
+import connection.ConnectionManager;
+import entity.Role;
 
 import java.sql.*;
 import java.util.ArrayList;

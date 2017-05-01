@@ -1,7 +1,5 @@
 package entity;
 
-import other.Role;
-
 import java.util.ArrayList;
 import java.util.List;
 

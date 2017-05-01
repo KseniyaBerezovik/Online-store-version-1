@@ -1,7 +1,8 @@
 package servlet;
 
+import dto.CartDto;
 import entity.Client;
-import other.Role;
+import entity.Role;
 import service.ClientService;
 
 import javax.servlet.RequestDispatcher;
@@ -53,12 +54,11 @@ public class RegistrationServlet extends HttpServlet {
         Client clientFromDB = ClientService.getInstance().save(client).get();
 
         HttpSession session = req.getSession();
-        session.setAttribute("userID", clientFromDB.getId());
+        session.setAttribute("client", clientFromDB);
         session.setAttribute("fullName", name + " " + surname);
+        session.setAttribute("cartDto", new CartDto(0, clientFromDB));
         session.setAttribute("role", Role.USER);
 
-        RequestDispatcher requestDispatcher
-                = getServletContext().getRequestDispatcher("/WEB-INF/jsp/catalog.jsp");
-        requestDispatcher.forward(req, resp);
+        resp.sendRedirect("/catalog");
     }
 }

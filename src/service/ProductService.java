@@ -35,5 +35,7 @@ public class ProductService {
         return ProductDao.getInstance().getAll();
     }
 
-
+    public void addExistingProduct(long productID, int amount){
+        ProductDao.getInstance().addExistingProduct(productID, amount);
+    }
 }

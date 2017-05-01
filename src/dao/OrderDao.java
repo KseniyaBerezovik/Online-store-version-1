@@ -2,8 +2,8 @@ package dao;
 import entity.Client;
 import entity.Order;
 import entity.Product;
-import other.ConnectionManager;
-import other.OrderStatus;
+import connection.ConnectionManager;
+import entity.OrderStatus;
 
 import java.sql.*;
 import java.time.LocalDate;
@@ -134,6 +134,35 @@ public class OrderDao {
         return resultOrders;
     }
 
+    public Set<Order> getAll() {
+        Set<Order> resultOrders = new HashSet<>();
+        try (Connection connection = ConnectionManager.getConnection()) {
+            try(PreparedStatement preparedStatement = connection.prepareStatement(
+                    "SELECT  c.name AS client_name, " +
+                            "c.surname, " +
+                            "o.id AS id_order, " +
+                            "o.date_of_issue, " +
+                            "o.closing_date, " +
+                            "o.status, " +
+                            "p.id AS id_product, " +
+                            "p.name AS product_name, " +
+                            "p.description, " +
+                            "p.price, " +
+                            "op.amount_products AS amount_product_in_order " +
+                            "FROM products AS p " +
+                            "JOIN orders_products AS op ON op.id_product = p.id " +
+                            "JOIN orders AS o ON o.id = op.id_order " +
+                            "JOIN clients AS c ON c.id = o.id_client")) {
+                ResultSet resultSet = preparedStatement.executeQuery();
+                resultOrders = parseResult(resultSet);
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return resultOrders;
+    }
+
     public Set<Order> getOrdersByProduct(Product product) {
         Set<Order> resultOrders = new HashSet<>();
         try (Connection connection = ConnectionManager.getConnection()) {
@@ -183,4 +212,5 @@ public class OrderDao {
             e.printStackTrace();
         }
     }
+
 }

@@ -2,7 +2,7 @@ package dao;
 
 
 import entity.Product;
-import other.ConnectionManager;
+import connection.ConnectionManager;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -28,8 +28,9 @@ public class ProductDao {
 
     public Optional<Product> save(Product product) {
         try(Connection connection = ConnectionManager.getConnection()) {
-            try(PreparedStatement preparedStatement = connection.prepareStatement("INSERT INTO products (name, description, price, amount) " +
-                    "VALUES (?, ?, ?, ?)", Statement.RETURN_GENERATED_KEYS)) {
+            try(PreparedStatement preparedStatement = connection.prepareStatement(
+                    "INSERT INTO products (name, description, price, amount) VALUES (?, ?, ?, ?)",
+                    Statement.RETURN_GENERATED_KEYS)) {
                 preparedStatement.setString(1, product.getName());
                 preparedStatement.setString(2, product.getDescription());
                 preparedStatement.setDouble(3, product.getPrice());
@@ -46,6 +47,31 @@ public class ProductDao {
             e.printStackTrace();
         }
         return Optional.empty();
+    }
+
+    public void addExistingProduct(long productID, int amount) {
+        try(Connection connection = ConnectionManager.getConnection()) {
+            connection.setAutoCommit(false);
+            int currentAmount = 0;
+            try(PreparedStatement preparedStatement = connection.prepareStatement(
+                    "SELECT amount FROM products WHERE id = ?")) {
+                preparedStatement.setLong(1, productID);
+                ResultSet resultSet = preparedStatement.executeQuery();
+                if(resultSet.next()) {
+                    currentAmount = resultSet.getInt(1);
+                }
+            }
+
+            try(PreparedStatement preparedStatement = connection.prepareStatement(
+                    "UPDATE products SET amount = ? WHERE id = ?")) {
+                preparedStatement.setInt(1, currentAmount + amount);
+                preparedStatement.setLong(2, productID);
+                preparedStatement.execute();
+            }
+            connection.commit();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
     public List<Product> getAll() {

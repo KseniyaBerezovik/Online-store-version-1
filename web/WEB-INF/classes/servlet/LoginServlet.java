@@ -1,6 +1,9 @@
 package servlet;
 
+import dto.CartDto;
 import entity.Client;
+import entity.Role;
+import service.CartService;
 import service.ClientService;
 
 import javax.servlet.RequestDispatcher;
@@ -13,11 +16,11 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.Optional;
 
-@WebServlet("/enter")
-public class EnterServlet extends HttpServlet {
+@WebServlet("/login")
+public class LoginServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/WEB-INF/jsp/enter.jsp");
+        RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/WEB-INF/jsp/login.jsp");
         dispatcher.forward(req, resp);
     }
 
@@ -28,19 +31,23 @@ public class EnterServlet extends HttpServlet {
 
         Optional<Client> clientOptional = ClientService.getInstance().getByEmailAndPass(email, pass);
 
-        String jspName;
+        String jspPath;
         if(!clientOptional.isPresent()) {
-            jspName = "enter.jsp";
+            jspPath = "/login";
         } else {
-            jspName = "catalog.jsp";
+            jspPath = "/catalog";
             HttpSession session = req.getSession(true);
-            session.setAttribute("userID", clientOptional.get().getId());
-            session.setAttribute("fullName", clientOptional.get().getName() + " " + clientOptional.get().getSurname());
-            session.setAttribute("role", clientOptional.get().getRole());
+            Client currentClient = clientOptional.get();
+            CartDto cartDto = new CartDto(CartService.getInstance().getAmountProductsInCart(currentClient), currentClient);
+            session.setAttribute("cartDto", cartDto);
+            session.setAttribute("client", currentClient);
+            session.setAttribute("fullName", currentClient.getName() + " " + currentClient.getSurname());
+            session.setAttribute("role", currentClient.getRole());
+            if(clientOptional.get().getRole() == Role.ADMIN) {
+                req.getSession().setAttribute("isAdmin", true);
+                jspPath = "/admin";
+            }
         }
-
-        RequestDispatcher requestDispatcher
-                = getServletContext().getRequestDispatcher("/WEB-INF/jsp/" + jspName);
-        requestDispatcher.forward(req, resp);
+        resp.sendRedirect(jspPath);
     }
 }
