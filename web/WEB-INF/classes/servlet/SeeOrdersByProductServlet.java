@@ -21,10 +21,10 @@ public class SeeOrdersByProductServlet extends HttpServlet {
         long productID = Long.parseLong(req.getParameter("id"));
         Product product = ProductService.getInstance().getByID(productID).get();
         Set<Order> orders = OrderService.getInstance().getOrdersByProduct(product);
-        orders.forEach(System.out::println);
         req.setAttribute("productName", product.getName());
-        req.setAttribute("orders", orders);
-        RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/WEB-INF/jsp/see-orders-by-product.jsp");
-        dispatcher.forward(req, resp);
+        if(orders.size() > 0) {
+            req.setAttribute("orders", orders);
+        }
+        getServletContext().getRequestDispatcher("/WEB-INF/jsp/see-orders-by-product.jsp").forward(req, resp);
     }
 }

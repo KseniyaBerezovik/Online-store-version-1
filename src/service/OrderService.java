@@ -28,7 +28,7 @@ public class OrderService {
     }
 
     public Optional<Order> create(Client client, Map<Product, Integer> products) {
-        if(getMissingProducts(products).size() != 0) {
+        if(!getMissingProducts(products).isEmpty()) {
             return Optional.empty();
         }
         Order order = new Order(products, LocalDate.now(), OrderStatus.ACCEPTED);
@@ -51,7 +51,7 @@ public class OrderService {
 
     public Set<Order> getOrdersByClient(Client client) {
         Set<Order> result = OrderDao.getInstance().getOrdersByClient(client);
-        return result.size() == 0 ? null : result;
+        return result.isEmpty() ? null : result;
     }
 
     public Set<Order> getOrdersByProduct(Product product) {

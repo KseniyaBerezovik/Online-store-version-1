@@ -1,18 +1,19 @@
 package entity;
 
 public class Product {
-
     private long id;
     private String name;
     private String description;
     private double price;
     private int amount;
+    private String img;
 
-    public Product(String name, String description, double price, int amount) {
+    public Product(String name, String description, double price, int amount, String img) {
         this.name = name;
         this.description = description;
         this.price = price;
         this.amount = amount;
+        this.img = img;
     }
 
     public Product(long id, String name, String description, double price) {
@@ -20,6 +21,15 @@ public class Product {
         this.name = name;
         this.description = description;
         this.price = price;
+    }
+
+    public Product(long id, String name, String description, double price, int amount, String img) {
+        this.id = id;
+        this.name = name;
+        this.description = description;
+        this.price = price;
+        this.amount = amount;
+        this.img = img;
     }
 
     public Product(long id, String name, String description, double price, int amount) {
@@ -68,6 +78,14 @@ public class Product {
 
     public void setAmount(int amount) {
         this.amount = amount;
+    }
+
+    public String getImg() {
+        return img;
+    }
+
+    public void setImg(String img) {
+        this.img = img;
     }
 
     @Override

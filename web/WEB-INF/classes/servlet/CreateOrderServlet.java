@@ -32,6 +32,7 @@ public class CreateOrderServlet extends HttpServlet {
             req.setAttribute("order", order.get());
             CartService.getInstance().clear(currentClient);
             jspName = "create-order.jsp";
+            CartService.getInstance().clear(currentClient);
         } else {
             Map<Product, Integer> missingProducts = new HashMap<>();
             for(Map.Entry<Product, Integer> entry : cart.getCartContent().entrySet()) {
@@ -44,7 +45,6 @@ public class CreateOrderServlet extends HttpServlet {
             jspName = "missing-products.jsp";
             req.setAttribute("missingProducts", missingProducts.entrySet());
         }
-        RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/WEB-INF/jsp/" + jspName);
-        dispatcher.forward(req, resp);
+        getServletContext().getRequestDispatcher("/WEB-INF/jsp/" + jspName).forward(req, resp);
     }
 }

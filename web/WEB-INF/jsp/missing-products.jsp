@@ -8,13 +8,14 @@
 <body>
 <%@ include file="navbar.jsp" %>
 <div class="myContent">
-    <div class="container">
-        <h2></h2>
-        <p>Невозможно оформить заказ. На складе не достаточно товаров.</p>
-        <p>Информация о недостающих товарах:</p>
-        <table class="table table-bordered">
+    <h2></h2>
+    <h4 class="col-lg-offset-4">Невозможно оформить заказ.<br>На складе не достаточно товаров.
+        <br>Информация о недостающих товарах:<br></h4>
+    <div class="container-fluid col-lg-5 col-lg-offset-3">
+        <table class="table table-striped table-bordered">
             <thead>
             <tr class="table-warning">
+                <th></th>
                 <th>Товар</th>
                 <th>Требуемое количество</th>
                 <th>В наличии</th>
@@ -23,6 +24,10 @@
             <tbody>
             <c:forEach var="entry" items="${requestScope.missingProducts}">
                 <tr class="table-active">
+                    <td class="col-lg-1 col-lg-offset-4">
+                        <img src="${pageContext.request.contextPath}/images/${entry.key.img}"
+                             class="img-rounded img-responsive">
+                    </td>
                     <td class="col-lg-1 col-lg-offset-4">${entry.key.name}</td>
                     <td class="col-lg-1">${entry.value}</td>
                     <td class="col-lg-1">${entry.key.amount}</td>
@@ -31,6 +36,10 @@
             </tbody>
         </table>
     </div>
+    <a href="${pageContext.request.contextPath}/cart">
+        <br>
+        <input class=" btn btn-lg btn-success col-lg-3 col-lg-offset-4" value="Назад к корзине">
+    </a>
 </div>
 <%@ include file="connect/js-connect.jsp" %>
 </body>

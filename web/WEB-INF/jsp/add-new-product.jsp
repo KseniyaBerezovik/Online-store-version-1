@@ -22,7 +22,10 @@
                 <input type="text" name="price" id="price" class="form-control" placeholder="Цена" required><br>
 
                 <label for="amount" class="sr-only">Количество</label>
-                <input type="number" name="amount" id="amount" class="form-control" placeholder="Количество" required><br>
+                <input type="number" min="1" name="amount" id="amount" class="form-control" placeholder="Количество" required><br>
+
+                <label for="img" class="sr-only">Изображение (название)</label>
+                <input type="text" name="img" id="img" class="form-control" placeholder="Изображение"><br>
 
                 <input class=" btn btn-lg btn-primary btn-block" type="submit" value="Сохранить">
             </form>
@@ -30,5 +33,6 @@
     </div>
 </div>
 </div>
+<%@ include file="connect/js-connect.jsp" %>
 </body>
 </html>

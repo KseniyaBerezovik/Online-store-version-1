@@ -18,7 +18,6 @@ public class SeeAllProductsServlet extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         List<Product> products = ProductService.getInstance().getAll();
         req.setAttribute("products", products);
-        RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/WEB-INF/jsp/see-all-products.jsp");
-        dispatcher.forward(req, resp);
+        getServletContext().getRequestDispatcher("/WEB-INF/jsp/see-all-products.jsp").forward(req, resp);
     }
 }

@@ -19,10 +19,7 @@ public class SeeOrdersServlet extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         Client currentClient = (Client) req.getSession().getAttribute("client");
         Set<Order> orders = OrderService.getInstance().getOrdersByClient(currentClient);
-
         req.setAttribute("orders", orders);
-
-        RequestDispatcher requestDispatcher = getServletContext().getRequestDispatcher("/WEB-INF/jsp/see-orders.jsp");
-        requestDispatcher.forward(req, resp);
+        getServletContext().getRequestDispatcher("/WEB-INF/jsp/see-orders.jsp").forward(req, resp);
     }
 }

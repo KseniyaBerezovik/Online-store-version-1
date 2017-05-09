@@ -6,10 +6,7 @@
     <title>Администратор</title>
 </head>
 <body>
-<%@ include file="admin-navbar.jsp"%>
-<div class="myContent">
-
-</div>
+<%@ include file="admin-navbar.jsp" %>
 <%@ include file="connect/js-connect.jsp" %>
 </body>
 </html>

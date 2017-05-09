@@ -9,20 +9,16 @@
 <%@ include file="navbar.jsp" %>
 <div class="myContent">
     <c:set var="order" value="${requestScope.order}"></c:set>
-    <div class="col-lg-2 col-lg-offset-3">
-        <div class="panel panel-primary">
-            <div class="panel-body">
-                Заказ на имя ${sessionScope.fullName} успешно оформлен!
-                Номер заказа №${order.id}.
-            </div>
+    <div class="col-lg-3 col-lg-offset-4 ">
+        <div class="well">
+            Заказ на имя ${sessionScope.fullName} успешно оформлен!<br>
+            Номер заказа ${order.id}.
         </div>
-    </div>
-
-    <div class="navbar-header">
-        <a class="navbar-brand btn btn-primary" href="/catalog">
+        <a class="navbar-brand btn btn-success" href="/catalog">
             На главную страницу
         </a>
     </div>
+</div>
 </div>
 <%@ include file="connect/js-connect.jsp" %>
 </body>

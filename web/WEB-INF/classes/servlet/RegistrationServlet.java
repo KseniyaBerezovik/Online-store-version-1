@@ -55,7 +55,6 @@ public class RegistrationServlet extends HttpServlet {
 
         HttpSession session = req.getSession();
         session.setAttribute("client", clientFromDB);
-        session.setAttribute("fullName", name + " " + surname);
         session.setAttribute("cartDto", new CartDto(0, clientFromDB));
         session.setAttribute("role", Role.USER);
 

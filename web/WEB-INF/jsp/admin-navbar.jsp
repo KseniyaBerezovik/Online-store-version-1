@@ -9,10 +9,6 @@
 
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav navbar-right">
-                <li role="presentation"><a href="/addProduct">Добавить товар</a></li>
-                <li role="presentation"><a href="/seeAllProducts">Просмотреть товары</a></li>
-                <li role="presentation"><a href="/seeAllClients">Просмотреть пользователей</a></li>
-                <li role="presentation"><a href="/deleteOrders">Удаление заказов</a></li>
                 <li class="dropdown">
                     <a href="${pageContext.request.contextPath}/logout" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
                         <span class="glyphicon glyphicon-user" aria-hidden="true"></span>
@@ -26,3 +22,28 @@
         </div>
     </div>
 </nav>
+
+<div class="myContent col-lg-2 navbar-fixed-top">
+    <ul class="nav nav-pills nav-stacked">
+        <li class="active">
+            <a href="/addProduct">
+                Добавить товар
+            </a>
+        </li>
+        <li class="active">
+            <a href="/seeAllProducts">
+                Просмотреть товары
+            </a>
+        </li>
+        <li class="active">
+            <a href="/seeAllClients">
+                Просмотреть пользователей
+            </a>
+        </li>
+        <li class="active">
+            <a href="/deleteOrders">
+                Удаление заказов
+            </a>
+        </li>
+    </ul>
+</div>

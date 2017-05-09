@@ -6,37 +6,51 @@
     <title>Catalog</title>
 </head>
 <body>
-    <%@ include file="navbar.jsp"%>
-    <div class="myContent">
+<%@ include file="navbar.jsp" %>
+<div class="myContent">
+    <div class="container-fluid col-lg-offset-3">
         <c:forEach var="product" items="${requestScope.products}">
-            <c:if test="${product.amount > 0}">
-                <div class="col-lg-6 col-lg-offset-3">
-                    <div class="panel panel-primary">
-                        <div class="panel-heading">
-                            <h3 class="panel-title">
-                                <a href="${pageContext.request.contextPath}/viewProductDetails&id=${product.id}">
-                                        ${product.name}
-                                </a>
-                            </h3>
+            <div class="row" style="margin-bottom: 40px">
+                <c:if test="${product.amount > 0}">
+                    <div class="col-lg-7">
+                        <div class="row breadcrumb">
+                            <div class="col-lg-10 pull-left">
+                                <strong>${product.name}</strong>
+                            </div>
+                            <div class="col-lg-2">
+                                <p class="pull-right"><strong><i>
+                                        ${product.price} $
+                                </i></strong></p>
+                            </div>
                         </div>
-                        <div class="panel-body">
-                                ${product.description}
+                        <div class="row">
+                            <div class="col-lg-4">
+                                <img src="${pageContext.request.contextPath}/images/${product.img}"
+                                     class="img-rounded img-responsive">
+                            </div>
+                            <div class="col-lg-8">
+                                <p>${product.description}</p>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="form-group">
+                                <div class="pull-right">
+                                    <button onclick="addToCart(${product.id})" class="btn btn-success">
+                                        Добавить в корзину
+                                    </button>
+                                </div>
+                                <div class="pull-right">
+                                    <input id="productAmount_${product.id}" type="number" class="form-control"
+                                           placeholder="Количество" style="width: 125px; margin-right: 10px;">
+                                </div>
+                            </div>
                         </div>
                     </div>
-                    <form method="post" action="${pageContext.request.contextPath}/addToCart">
-                        <div class="form-group col-lg-2">
-                            <label for="productAmount" class="form-label">Количество: </label>
-                            <input id="productAmount" type="number" name="productAmount" class="form-control">
-
-                            <input hidden="hidden" id="id" name="id" min="1" value="${product.id}">
-                            <button type="submit" class="btn btn-success">Добавить в корзину</button>
-                        </div>
-                    </form>
-                </div>
-            </c:if>
+                </c:if>
+            </div>
         </c:forEach>
     </div>
-    <%@ include file="connect/js-connect.jsp" %>
+</div>
+<%@ include file="connect/js-connect.jsp" %>
 </body>
 </html>
-

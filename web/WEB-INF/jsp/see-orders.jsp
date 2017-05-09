@@ -7,10 +7,7 @@
 </head>
 <body>
 <%@ include file="navbar.jsp" %>
-
-<div class="container">
-    <h2></h2>
-    <p>Информация о заказах пользователя ${sessionScope.fullName}:</p>
+<div class="container myContent">
     <%@include file="orders-table.jsp"%>
 </div>
 <%@ include file="connect/js-connect.jsp" %>

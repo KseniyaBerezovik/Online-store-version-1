@@ -20,8 +20,7 @@ public class DeleteOrders extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         Set<Order> orders = OrderService.getInstance().getAll();
         req.setAttribute("orders", orders);
-        RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/WEB-INF/jsp/delete-orders.jsp");
-        dispatcher.forward(req, resp);
+        getServletContext().getRequestDispatcher("/WEB-INF/jsp/delete-orders.jsp").forward(req, resp);
     }
 
     @Override

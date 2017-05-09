@@ -29,12 +29,13 @@ public class ProductDao {
     public Optional<Product> save(Product product) {
         try(Connection connection = ConnectionManager.getConnection()) {
             try(PreparedStatement preparedStatement = connection.prepareStatement(
-                    "INSERT INTO products (name, description, price, amount) VALUES (?, ?, ?, ?)",
+                    "INSERT INTO products (name, description, price, amount, img) VALUES (?, ?, ?, ?, ?)",
                     Statement.RETURN_GENERATED_KEYS)) {
                 preparedStatement.setString(1, product.getName());
                 preparedStatement.setString(2, product.getDescription());
                 preparedStatement.setDouble(3, product.getPrice());
                 preparedStatement.setInt(4, product.getAmount());
+                preparedStatement.setString(5, product.getImg());
                 preparedStatement.executeUpdate();
 
                 ResultSet generatedKeys = preparedStatement.getGeneratedKeys();
@@ -86,7 +87,8 @@ public class ProductDao {
                     String description = resultSet.getString("description");
                     double price = resultSet.getDouble("price");
                     int amount = resultSet.getInt("amount");
-                    products.add(new Product(id, name, description, price, amount));
+                    String img = resultSet.getString("img");
+                    products.add(new Product(id, name, description, price, amount, img));
                 }
             }
 
@@ -106,7 +108,8 @@ public class ProductDao {
                     String description = resultSet.getString(3);
                     double price = resultSet.getDouble(4);
                     int amount = resultSet.getInt(5);
-                    Product product = new Product(id, name, description, price,  amount);
+                    String img = resultSet.getString(6);
+                    Product product = new Product(id, name, description, price,  amount, img);
                     return Optional.of(product);
                 }
             }

@@ -17,9 +17,9 @@ import java.util.List;
 public class CatalogServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        CartService.getInstance().updateCart(req);
         List<Product> products = ProductService.getInstance().getAll();
         req.setAttribute("products", products);
-        RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/WEB-INF/jsp/catalog.jsp");
-        dispatcher.forward(req, resp);
+        getServletContext().getRequestDispatcher("/WEB-INF/jsp/catalog.jsp").forward(req, resp);
     }
 }

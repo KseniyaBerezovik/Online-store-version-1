@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Client {
-
     private long id;
     private String name;
     private String surname;
@@ -106,6 +105,10 @@ public class Client {
 
     public void setRole(Role role) {
         this.role = role;
+    }
+
+    public String getFullName() {
+        return this.name + " " + this.surname;
     }
 
     @Override

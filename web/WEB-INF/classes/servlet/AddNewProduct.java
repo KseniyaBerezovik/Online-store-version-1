@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.Optional;
 
 @WebServlet("/addNewProduct")
 public class AddNewProduct extends HttpServlet {
@@ -25,9 +26,10 @@ public class AddNewProduct extends HttpServlet {
         String description = req.getParameter("description");
         double price = Double.parseDouble(req.getParameter("price"));
         int amount = Integer.parseInt(req.getParameter("amount"));
+        String img = req.getParameter("img");
 
-        Product product = new Product(name, description, price, amount);
-        ProductService.getInstance().save(product);
+        Product product = new Product(name, description, price, amount, !img.isEmpty() ? img : "noimage.jpg");;
+        ProductService.getInstance().save(product).get();
 
         RequestDispatcher requestDispatcher
                 = getServletContext().getRequestDispatcher("/WEB-INF/jsp/admin.jsp");

@@ -21,6 +21,10 @@ public class LoginServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/WEB-INF/jsp/login.jsp");
+        HttpSession session = req.getSession();
+        if(session.getAttribute("currentLanguage") == null) {
+            session.setAttribute("currentLanguage", "en_US");
+        }
         dispatcher.forward(req, resp);
     }
 
@@ -36,12 +40,12 @@ public class LoginServlet extends HttpServlet {
             jspPath = "/login";
         } else {
             jspPath = "/catalog";
-            HttpSession session = req.getSession(true);
             Client currentClient = clientOptional.get();
             CartDto cartDto = new CartDto(CartService.getInstance().getAmountProductsInCart(currentClient), currentClient);
+            HttpSession session = req.getSession();
             session.setAttribute("cartDto", cartDto);
             session.setAttribute("client", currentClient);
-            session.setAttribute("fullName", currentClient.getName() + " " + currentClient.getSurname());
+            session.setAttribute("fullName", currentClient.getFullName());
             session.setAttribute("role", currentClient.getRole());
             if(clientOptional.get().getRole() == Role.ADMIN) {
                 req.getSession().setAttribute("isAdmin", true);

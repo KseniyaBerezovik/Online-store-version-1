@@ -21,10 +21,8 @@ public class SeeOrdersByClientServlet extends HttpServlet {
         int id = Integer.parseInt(req.getParameter("id"));
         Client client = ClientService.getInstance().getClientByID(id).get();
         Set<Order> orders = OrderService.getInstance().getOrdersByClient(client);
-        String clientFullName = client.getName() + " " + client.getSurname();
-        req.setAttribute("fullName", clientFullName);
+        req.setAttribute("fullName", client.getFullName());
         req.setAttribute("orders", orders);
-        RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/WEB-INF/jsp/see-orders-by-client.jsp");
-        dispatcher.forward(req, resp);
+        getServletContext().getRequestDispatcher("/WEB-INF/jsp/see-orders-by-client.jsp").forward(req, resp);
     }
 }

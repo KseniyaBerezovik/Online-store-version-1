@@ -18,7 +18,6 @@ public class SeeAllClientsServlet extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         List<Client> clients = ClientService.getInstance().getAll();
         req.setAttribute("clients", clients);
-        RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/WEB-INF/jsp/see-all-clients.jsp");
-        dispatcher.forward(req, resp);
+        getServletContext().getRequestDispatcher("/WEB-INF/jsp/see-all-clients.jsp").forward(req, resp);
     }
 }
